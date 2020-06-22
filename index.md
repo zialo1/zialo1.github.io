@@ -1,6 +1,6 @@
 # Hellboy - eine Legende 
 
-Hellboy kam als ein Baby zu den Menschen. Er gehört dem Militär. Er macht nur was er will.
+Hellboy kam als ein Baby zu den Menschen. Er gehört zum Militär, macht trotzdem was er will.
 
 
 ## Verhalten
@@ -12,6 +12,7 @@ Hellboy kam als ein Baby zu den Menschen. Er gehört dem Militär. Er macht nur 
 
 > Sie spielen unser Lied. Komm Tiger, wir gehen Monster verhauen.
 
+Letzter bekannter Wohnort:
 <img src="https://upload.wikimedia.org/wikipedia/de/0/00/Schloss_Burg_vor_1898.jpg" />
 
 
