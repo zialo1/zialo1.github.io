@@ -1,6 +1,7 @@
 # Hellboy - eine Legende 
 
-Hellboy kam als ein Baby zu den Menschen. Er gehört dem Militär.
+Hellboy kam als ein Baby zu den Menschen. Er gehört dem Militär. Er macht nur was er will.
+
 
 ## Verhalten
 
