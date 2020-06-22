@@ -9,3 +9,5 @@ Hellboy kam als ein Baby zu den Menschen. Er gehört dem Militär.
 * nimmt kein Blatt vor den Mund
 * raucht Zigarren
 
+> Sie spielen unser Lied. Komm Tiger, wir gehen Monster verhauen.
+
