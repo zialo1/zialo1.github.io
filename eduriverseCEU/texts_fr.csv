@@ -1,0 +1,90 @@
+key,text
+mouth-danube,Danube
+mouth-mediterranean,Mer Méditerranée
+mouth-atlantic,Atlantique
+mouth-rhone,Rhône
+mouth-saone,Saône
+mouth-north-sea,Mer du Nord
+mouth-adriatic,Mer Adriatique
+mouth-baltic,Mer Baltique
+mouth-black-sea,Mer Noire
+mouth-po,Pô
+mouth-rhine,Rhin
+
+Disentis,Disentis
+Coire,Coire
+Bale,Bâle
+Strasbourg,Strasbourg
+Karlsruhe,Karlsruhe
+Mannheim,Mannheim
+Cologne,Cologne
+Ulrichen,Ulrichen
+Brig,Brig
+Sierre,Sierre
+Lausanne,Lausanne
+Lyon,Lyon
+Meiringen,Meiringen
+Thun,Thun
+Berne,Berne
+Goschenen,Goschenen
+Altdorf,Altdorf
+Lucerne,Lucerne
+Airolo,Airolo
+Bellinzone,Bellinzone
+Locarno,Locarno
+Torre Pellice,Torre Pellice
+Turin,Turin
+Saint-Moritz,Saint-Moritz
+Innsbruck,Innsbruck
+Dijon,Dijon
+Saint-Ursanne,Saint-Ursanne
+Audincourt,Audincourt
+Besancon,Besançon
+Donaueschingen,Donaueschingen
+Ulm,Ulm
+Ratisbonne,Ratisbonne
+Linz,Linz
+Vienne,Vienne
+Smolensk,Smolensk
+Mogilev,Mogilev
+Kiew,Kiew
+Lwiw,Lwiw
+Ternopil,Ternopil
+Chmelnyzkyj,Chmelnyzkyj
+Winnyzja,Winnyzja
+Spindleruv Mlyn,Spindleruv Mlyn
+Pardubice,Pardubice
+Praha,Praha
+Hamburg,Hamburg
+Wisla,Wisla
+Oswiecim,Oswiecim
+Krakau,Krakau
+Warschau,Warschau
+Ostrava,Ostrava
+Szczecin,Szczecin
+Le Puy-en-Velay,Le Puy-en-Velay
+Saint-Etienne,Saint-Etienne
+Nantes,Nantes
+rhein-label,Rhin
+rhone-label,Rhône
+aare-label,Aar
+reuss-label,Reuss
+ticino-label,Tessin
+po-label,Pô
+inn-label,Inn
+saone-label,Saône
+doubs-label,Doubs
+donau-label,Danube
+dnieper-label,Dniepr
+dniester-label,Dniester
+elbe-label,Elbe
+vistula-label,Vistule
+oder-label,Oder
+loire-label,Loire
+title,Rhin — three.js
+travel,Chemin d'une goutte d'eau
+topobutton,Charger TopoMap
+panobutton,Panorama / Chemin en mode Panorama
+river-choice,Fleuve
+language-choice,Langue
+altitude-picker,Axe Z

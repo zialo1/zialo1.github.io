@@ -1,0 +1,36 @@
+key,text
+mouth-danube,Danube
+mouth-mediterranean,Mediterranean Sea
+mouth-atlantic,Atlantic Ocean
+mouth-rhone,Rhône
+mouth-saone,Saône
+mouth-north-sea,North Sea
+mouth-adriatic,Adriatic Sea
+mouth-baltic,Baltic Sea
+mouth-black-sea,Black Sea
+mouth-po,Po
+mouth-rhine,Rhine
+
+rhein-label,Rhine
+rhone-label,Rhône
+aare-label,Aare
+reuss-label,Reuss
+ticino-label,Ticino
+po-label,Po
+inn-label,Inn
+saone-label,Saône
+doubs-label,Doubs
+donau-label,Danube
+dnieper-label,Dnieper
+dniester-label,Dniester
+elbe-label,Elbe
+vistula-label,Vistula
+oder-label,Oder
+loire-label,Loire
+title,Rhine — three.js
+travel,Path of a water drop
+topobutton,Load TopoMap
+panobutton,Panorama / Path in Panorama Mode
+river-choice,River
+language-choice,Language
+altitude-picker,Z-axis

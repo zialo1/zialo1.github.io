@@ -1,1 +1,275 @@
-
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rhein — three.js</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #0b0f1a; }
+    #info {
+      position: fixed; top: 10px; left: 10px; color: #9fb3ff;
+      font: 13px/1.4 system-ui, sans-serif; pointer-events: none;
+    }
+    #legend {
+      position: fixed; top: 50%; right: 20px; transform: translateY(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: #9fb3ff; font: 12px/1.3 system-ui, sans-serif;
+    }
+    #legend .cap { letter-spacing: .05em; }
+    #legend-scale {
+      position: relative; display: flex; justify-content: flex-end; height: 220px;
+      min-width: 150px;
+    }
+    #legend-bar {
+      width: 16px; height: 220px; border-radius: 4px; border: 1px solid #335577;
+      cursor: pointer;
+    }
+    .city-mark {
+      position: absolute; left: 0; right: 0; height: 0; pointer-events: none;
+      border-top: 1px dashed rgba(255, 210, 74, 0.9); z-index: 2;
+    }
+    .city-mark-name {
+      position: absolute; right: 22px; top: 0; transform: translateY(-50%);
+      font: 10px/1 system-ui, sans-serif; color: #ffe28a; white-space: nowrap;
+      text-shadow: 0 0 3px #000, 0 0 3px #000; pointer-events: none;
+    }
+    #cursor {
+      position: absolute; right: 16px; display: flex; flex-direction: column;
+      align-items: center; pointer-events: none; z-index: 5;
+    }
+    #cursor .tri {
+      width: 0; height: 0;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+      border-left: 12px solid #ff3b3b;
+    }
+    #cursor .zval {
+      margin-top: 2px; color: #ff8080; font-weight: 600; white-space: nowrap;
+      background: rgba(35, 35, 35, 0.6); padding: 1px 5px; border-radius: 4px;
+    }
+    .city-label {
+      color: #ffe28a; font: 600 12px/1.2 system-ui, sans-serif;
+      text-shadow: 0 0 4px #000, 0 0 4px #000; white-space: nowrap;
+      pointer-events: none;
+    }
+    .lake-label {
+      color: #8fd0ff; font: 600 12px/1.2 system-ui, sans-serif;
+      text-shadow: 0 0 4px #000, 0 0 4px #000; white-space: nowrap;
+      pointer-events: none; letter-spacing: .03em;
+    }
+    .capital-label {
+      color: #ff8fa3; font: 700 12px/1.2 system-ui, sans-serif;
+      text-shadow: 0 0 4px #000, 0 0 4px #000; white-space: nowrap;
+      pointer-events: none;
+    }
+    .sea-label {
+      color: #d6efff; font: 800 18px/1.2 system-ui, sans-serif;
+      letter-spacing: .05em; pointer-events: none; white-space: nowrap;
+      text-shadow: 0 1px 0 #06304f, 0 2px 1px #0a2034, 0 3px 5px rgba(0,0,0,.85),
+                   0 -1px 0 rgba(255,255,255,.35);
+    }
+    #map-legend {
+      position: fixed; left: 10px; bottom: 10px;
+      color: #9fb3ff; font: 12px/1.5 system-ui, sans-serif;
+      background: rgba(10,15,26,.55); padding: 8px 10px; border-radius: 6px;
+      border: 1px solid #1d2b44;
+    }
+    #map-legend .row { display: flex; align-items: center; gap: 6px; }
+    #map-legend .sw { width: 16px; height: 3px; border-radius: 2px; }
+    #map-legend .dot { width: 9px; height: 9px; border-radius: 50%; }
+    #flow-info {
+      position: fixed; left: 50%; transform: translateX(-50%); bottom: 14px;
+      background: rgba(10,15,26,.85); color: #e8eef5;
+      border: 1px solid #2b3a4a; border-radius: 8px; padding: 8px 12px;
+      font: 13px/1.45 ui-monospace, Menlo, Consolas, monospace;
+      max-width: 330px; display: none; pointer-events: none; text-align: center;
+    }
+    #flow-info b { color: #ffd24a; }
+    #anim-btn {
+      position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 40;
+      cursor: pointer; background: #2a6cff; color: #fff; border: none; border-radius: 8px;
+      padding: 10px 16px; font: 17px system-ui, sans-serif;
+    }
+    #topright {
+      position: fixed; top: 10px; right: 10px; z-index: 40;
+      display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+    }
+    #topo-btn {
+      cursor: pointer;
+      background: #1c8f5a; color: #fff; border: none; border-radius: 8px;
+      padding: 10px 16px; font: 17px system-ui, sans-serif;
+    }
+    #pano-btn {
+      position: fixed; top: 10px; left: calc(50% + 110px); z-index: 40;
+      cursor: pointer; background: #6a4cff; color: #fff; border: none; border-radius: 8px;
+      padding: 10px 16px; font: 17px system-ui, sans-serif; white-space: nowrap;
+    }
+    #anim-btn.active, #topo-btn.active, #pano-btn.active { text-decoration: underline; }
+    .magnifier {
+      position: fixed; right: 24px; bottom: 24px; width: 338px; height: 416px;
+      z-index: 45; display: none; pointer-events: none;
+    }
+    .magnifier .lens-canvas {
+      position: absolute; left: 13px; top: 13px; width: 312px; height: 312px;
+      border-radius: 50%; box-shadow: 0 0 0 2px #2a1a0c inset;
+    }
+    .magnifier .lens-frame {
+      position: absolute; left: 0; top: 0; width: 338px; height: 416px; overflow: visible;
+    }
+    #anim-btn {
+      position: fixed; top: 10px; left: 50%; transform: translateX(-50%); z-index: 40;
+      cursor: pointer; background: #b3431c; color: #fff; border: none; border-radius: 8px;
+      padding: 10px 16px; font: 17px system-ui, sans-serif;
+    }
+    #anim-popup {
+      position: fixed; left: 50%; top: 32%; transform: translate(-50%, -50%);
+      max-width: 420px; background: rgba(10,15,26,.94); color: #e8eef5;
+      border: 1px solid #2b3a4a; border-radius: 10px; padding: 16px 18px;
+      font: 13px/1.5 system-ui, sans-serif; z-index: 70; cursor: pointer; white-space: pre-line;
+    }
+    #anim-hud {
+      position: fixed; top: 50px; left: 50%; transform: translateX(-50%);
+      background: rgba(10,15,26,.82); color: #cfe3ff; border: 1px solid #2b3a4a;
+      border-radius: 8px; padding: 6px 14px; font: 13px system-ui, sans-serif;
+      z-index: 40; white-space: nowrap; display: none;
+    }
+    #anim-popup {
+      position: fixed; left: 50%; top: 32%; transform: translate(-50%, -50%);
+      max-width: 400px; background: rgba(10,15,26,.94); color: #e8eef5;
+      border: 1px solid #2b3a4a; border-radius: 10px; padding: 16px 18px;
+      font: 13px/1.5 system-ui, sans-serif; z-index: 70; cursor: pointer; white-space: pre-line;
+    }
+    #anim-hud {
+      position: fixed; top: 50px; left: 50%; transform: translateX(-50%);
+      background: rgba(10,15,26,.82); color: #cfe3ff; border: 1px solid #2b3a4a;
+      border-radius: 8px; padding: 6px 14px; font: 13px system-ui, sans-serif;
+      z-index: 40; white-space: nowrap; display: none;
+    }
+    #anim-stop {
+      position: fixed; top: 50px; transform: none;
+      background: #b3431c; color: #fff; border: none; border-radius: 8px;
+      padding: 6px 14px; font: 13px system-ui, sans-serif; cursor: pointer;
+      z-index: 41; display: none;
+    }
+    #river-pick {
+      position: fixed; top: 44px; left: 10px; z-index: 50;
+      width: 152px; max-height: calc(100vh - 120px); overflow: auto;
+      background: rgba(10,15,26,.6); border: 1px solid #3a5a8c; border-radius: 10px;
+      padding: 8px; color: #cfe3ff; font: 14px system-ui, sans-serif;
+    }
+    #river-list { display: flex; flex-direction: column; gap: 3px; }
+    .river-btn {
+      display: block; width: 100%; text-align: left;
+      background: #12203a; color: #cfe3ff; border: 1px solid #2a3f63;
+      border-radius: 6px; padding: 6px 10px; font: 14px system-ui, sans-serif; cursor: pointer;
+    }
+    .river-btn:hover { border-color: #5b8fd6; background: #163059; }
+    .river-btn.active { background: #2a6cff; color: #fff; border-color: #5b8fd6; }
+    #lang-pick {
+      display: flex; align-items: center; gap: 8px;
+      color: #cfe3ff; font: 14px system-ui, sans-serif;
+    }
+    #lang-select {
+      background: #12203a; color: #cfe3ff; border: 1px solid #3a5a8c;
+      border-radius: 8px; padding: 8px 12px; font: 14px system-ui, sans-serif; cursor: pointer;
+    }
+    #lang-select:hover { border-color: #5b8fd6; }
+    #lang-select option { color: #cfe3ff; background: #12203a; }
+    #poi {
+      position: fixed; bottom: 170px; left: 10px; z-index: 50;
+      color: #cfe3ff; font: 13px/1.4 system-ui, sans-serif; pointer-events: none;
+    }
+    #poi a { color: #7fd0ff; pointer-events: auto; }
+    #debug {
+      position: fixed; top: 50px; right: 10px; max-width: 380px; max-height: 80vh; overflow: auto;
+      background: rgba(10,15,26,.92); color: #d6e6ff; border: 1px solid #2b3a4a; border-radius: 8px;
+      padding: 10px 12px; font: 12px/1.45 ui-monospace, Menlo, Consolas, monospace; z-index: 80; display: none;
+      white-space: pre-wrap;
+    }
+    #debug b { color: #ffd24a; }
+    #err {
+      position: fixed; left: 0; right: 0; bottom: 0; max-height: 45vh; overflow: auto;
+      background: #2a0d0d; color: #ffb3b3; border-top: 2px solid #ff5555;
+      font: 12px/1.4 ui-monospace, Consolas, monospace; padding: 8px 10px;
+      z-index: 200; white-space: pre-wrap; display: none;
+    }
+  </style>
+  <script>
+    function showErr(m) {
+      let d = document.getElementById('err');
+      if (!d) { d = document.createElement('div'); d.id = 'err'; document.body.appendChild(d); }
+      d.style.display = 'block';
+      d.textContent += m + '\n';
+    }
+    window.addEventListener('error', (e) => {
+      showErr((e.message || 'Fehler') + (e.filename ? (' @ ' + e.filename + ':' + e.lineno) : ''));
+    });
+    window.addEventListener('unhandledrejection', (e) => {
+      const r = e.reason;
+      showErr('Promise-Fehler: ' + (r && r.message ? r.message : r));
+    });
+  </script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "geotiff": "https://cdn.jsdelivr.net/npm/geotiff@2.1.3/+esm",
+      "js-yaml": "https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/+esm"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="info"></div>
+  <div id="river-pick">
+    <span id="rp-label" style="display:block; margin-bottom:4px; font-size:12px; opacity:.85;"></span>
+    <div id="river-list"></div>
+  </div>
+  <div id="poi" style="display:none;"></div>
+  <pre id="debug"></pre>
+  <div id="legend">
+    <div class="cap" id="legend-zcap">Z-Achse</div>
+    <div id="legend-top">–</div>
+    <div id="legend-scale">
+      <div id="cursor">
+        <div class="tri"></div>
+        <div class="zval">–</div>
+      </div>
+      <div id="legend-bar"></div>
+    </div>
+    <div id="legend-bottom">–</div>
+    <div id="desc-scale" style="display:flex; justify-content:flex-end; align-items:stretch; height:120px; margin-top:12px; min-width:90px;">
+      <div id="desc-bar" style="width:14px; height:120px; border-radius:4px; border:1px solid #335577;"></div>
+      <div style="position:relative; width:50px;">
+        <div id="desc-top" style="position:absolute; top:0; right:0; font-size:11px; text-align:right; white-space:nowrap;">–</div>
+        <div id="desc-bottom" style="position:absolute; bottom:0; right:0; font-size:11px; text-align:right; white-space:nowrap;">0</div>
+      </div>
+    </div>
+    <div style="text-align:center; font-size:11px; margin-top:3px;">in m / 10 km</div>
+    <div class="cap" style="text-align:center; margin-top:4px;">Gef&auml;lle</div>
+  </div>
+  <div id="map-legend">
+    <div class="row"><span class="sw" style="background:#5b7bb5"></span> Ländergrenzen</div>
+    <div class="row"><span class="sw" style="background:#2a6cff;opacity:.6"></span> Seen</div>
+    <div class="row"><span class="sw" style="background:#6fb7ff;opacity:.7"></span> Meer – Nordsee</div>
+    <div class="row"><span class="dot" style="background:#ffd24a"></span> Städte am Rhein</div>
+    <div class="row"><span class="dot" style="background:#ff4d6d"></span> Hauptstädte (im Korridor)</div>
+    <div class="row"><span class="sw" style="background:#bcd0e0"></span> Höhenlinien (100 m)</div>
+  </div>
+  <div id="flow-info"></div>
+  <div id="topright">
+    <button id="topo-btn">OpenTopoMap laden</button>
+    <div id="lang-pick">
+      <span>Sprache:</span>
+      <select id="lang-select"></select>
+    </div>
+  </div>
+    <button id="anim-btn">Weg eines Wassertropfens</button>
+    <button id="pano-btn">Panorama / Weg in Panorama Modus</button>
+  <div id="anim-popup" style="display:none"></div>
+  <div id="anim-hud"></div>
+  <button id="anim-stop">Stop</button>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>OpenTopoMap in three.js</title>
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
+    #info { position: fixed; top: 8px; left: 8px; color: #fff; font: 13px sans-serif;
+            background: rgba(0,0,0,.5); padding: 6px 8px; border-radius: 4px; z-index: 10; }
+  </style>
+</head>
+<body>
+  <div id="info">OpenTopoMap (Europe) — drag to orbit, scroll to zoom</div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+    // --- Configuration -------------------------------------------------
+    const ZOOM = 5;
+    // Europe bounding box [west, south, east, north]
+    const BBOX = [-25.0, 34.0, 45.0, 72.0];
+    const TILE = 256;
+    const SUB = ['a', 'b', 'c'];
+
+    // --- Tile helpers (Web Mercator / slippy) --------------------------
+    function lonLatToTile(lon, lat, z) {
+      const n = Math.pow(2, z);
+      const x = Math.floor((lon + 180) / 360 * n);
+      const latRad = lat * Math.PI / 180;
+      const y = Math.floor((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2 * n);
+      return [x, y];
+    }
+
+    const [x0, y0] = lonLatToTile(BBOX[0], BBOX[3], ZOOM); // top-left (NW)
+    const [x1, y1] = lonLatToTile(BBOX[2], BBOX[1], ZOOM); // bottom-right (SE)
+    const tilesX = x1 - x0 + 1;
+    const tilesY = y1 - y0 + 1;
+
+    // --- Build a canvas from the tiles --------------------------------
+    const canvas = document.createElement('canvas');
+    canvas.width = tilesX * TILE;
+    canvas.height = tilesY * TILE;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#888';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    let remaining = tilesX * tilesY;
+    function done() {
+      remaining--;
+      if (remaining <= 0 && texture) texture.needsUpdate = true;
+    }
+
+    for (let ty = y0; ty <= y1; ty++) {
+      for (let tx = x0; tx <= x1; tx++) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          ctx.drawImage(img, (tx - x0) * TILE, (ty - y0) * TILE);
+          done();
+        };
+        img.onerror = done;
+        const s = SUB[(tx + ty) % SUB.length];
+        img.src = `https://${s}.tile.opentopomap.org/${ZOOM}/${tx}/${ty}.png`;
+      }
+    }
+
+    // --- three.js scene ----------------------------------------------
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x101015);
+
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 5000);
+    camera.position.set(0, canvas.height / 60, canvas.height / 90);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.target.set(0, 0, 0);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.minFilter = THREE.LinearFilter;
+
+    const aspect = canvas.width / canvas.height;
+    const planeH = 100;
+    const planeW = 100 * aspect;
+    const geo = new THREE.PlaneGeometry(planeW, planeH);
+    const mat = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+    const plane = new THREE.Mesh(geo, mat);
+    plane.rotation.x = -Math.PI / 2; // lay flat like a ground map
+    scene.add(plane);
+
+    // subtle grid for depth reference
+    const grid = new THREE.GridHelper(Math.max(planeW, planeH) * 1.5, 20, 0x444444, 0x222222);
+    grid.position.y = -0.1;
+    scene.add(grid);
+
+    function onResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+    window.addEventListener('resize', onResize);
+
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>

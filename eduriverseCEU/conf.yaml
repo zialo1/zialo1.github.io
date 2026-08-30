@@ -1,0 +1,190 @@
+coding: utf-8
+version: 0.2
+
+default-texts:
+  - buttons:
+      travel: Weg eines Wassertropfens
+      topobutton: TopoMap laden
+      panobutton: Weg im Panorama Modus
+      river-choice: Fluss
+      language-choice: Sprache
+      altitude-picker: Z-Achse
+  - other:
+      exit: "Dieser Fluss fliesst hier in {mouth}."
+      travel: Weg eines Wassertropfens
+      title: ""
+      subtitle: "Fluss · Quelle → Mündung · Maus: drehen / zoom · Klick/↑↓: Höhe schneiden · Fluss oben links wählbar"
+
+rivers:
+  - key: rhein
+    label: Rhin
+    contours: river_contours.json
+    mouth-key: north-sea
+  - key: rhone
+    label: Rhone
+    contours: rhone_contours.json
+    poi: { name: Brig, url: "https://www.brig.ch/" }
+    mouth-key: mediterranean
+  - key: aare
+    label: Aar
+    contours: aare_contours.json
+    mouth-key: rhine
+  - key: reuss
+    label: Reuss
+    contours: reuss_contours.json
+    mouth-key: rhine
+  - key: ticino
+    label: Tessin
+    contours: ticino_contours.json
+    mouth-key: po
+  - key: po
+    label: Po
+    contours: po_contours.json
+    mouth-key: adriatic
+  - key: inn
+    label: Inn
+    contours: inn_contours.json
+    mouth-key: danube
+  - key: saone
+    label: Saone
+    contours: saone_contours.json
+    mouth-key: rhone
+  - key: doubs
+    label: Doubs
+    contours: doubs_contours.json
+    mouth-key: saone
+  - key: donau
+    label: Danube
+    contours: donau_contours.json
+    mouth-key: black-sea
+  - key: dnieper
+    label: Dnieper
+    contours: dnieper_contours.json
+    mouth-key: black-sea
+  - key: dniester
+    label: Dniester
+    contours: dniester_contours.json
+    mouth-key: black-sea
+  - key: elbe
+    label: Elbe
+    contours: elbe_contours.json
+    mouth-key: north-sea
+  - key: vistula
+    label: Vistula
+    contours: vistula_contours.json
+    mouth-key: baltic
+  - key: oder
+    label: Oder
+    contours: oder_contours.json
+    mouth-key: baltic
+  - key: loire
+    label: Loire
+    contours: loire_contours.json
+    mouth-key: atlantic
+
+languages:
+  default: de
+  de: texts_de.csv
+  fr: texts_fr.csv
+  it: texts_it.csv
+  en: texts_en.csv
+
+cities:
+  size: 1.0
+  rhein:
+    Disentis:    { altitude: 1130, people: 7300, lon: 8.857, lat: 46.703}
+    Coire:       { altitude: 593,  people: 38000, lon: 9.532, lat: 46.849}
+    Bale:        { altitude: 260,  people: 170635, lon: 7.588, lat: 47.559}
+    Strasbourg:  { altitude: 145,  people: 274845, lon: 7.752, lat: 48.583}
+    Karlsruhe:   { altitude: 115,  people: 283799, lon: 8.401, lat: 49.006}
+    Mannheim:    { altitude: 97,   people: 313174, lon: 8.467, lat: 49.487}
+    Cologne:     { altitude: 37,   people: 963395, lon: 6.958, lat: 50.936}
+  rhone:
+    Ulrichen:    { altitude: 1340, people: 230, lon: 8.223, lat: 46.383}
+    Brig:        { altitude: 691,  people: 13000, lon: 7.984, lat: 46.316}
+    Sierre:      { altitude: 533,  people: 16000, lon: 7.537, lat: 46.295}
+    Lausanne:    { altitude: 495,  people: 116751, lon: 6.632, lat: 46.519}
+    Lyon:        { altitude: 162,  people: 513000, lon: 4.835, lat: 45.764}
+  aare:
+    Meiringen:   { altitude: 598,  people: 4700, lon: 8.184, lat: 46.727}
+    Thun:        { altitude: 560,  people: 43000, lon: 7.628, lat: 46.758}
+    Berne:       { altitude: 540,  people: 121631, lon: 7.447, lat: 46.948}
+  reuss:
+    Goschenen:   { altitude: 1842, people: 1100, lon: 8.571, lat: 46.634}
+    Altdorf:     { altitude: 453,  people: 9400, lon: 8.643, lat: 46.884}
+    Lucerne:     { altitude: 436,  people: 77491, lon: 8.31, lat: 47.05}
+  ticino:
+    Airolo:      { altitude: 1143, people: 1476, lon: 8.594, lat: 46.527}
+    Bellinzone:  { altitude: 229,  people: 43911, lon: 9.022, lat: 46.194}
+    Locarno:     { altitude: 208,  people: 15676, lon: 8.794, lat: 46.167}
+  po:
+    Torre Pellice: { altitude: 1229, people: 4723, lon: 7.099, lat: 44.89}
+    Turin:       { altitude: 239,  people: 870000, lon: 7.686, lat: 45.07}
+  inn:
+    "Saint-Moritz": { altitude: 1821, people: 4911, lon: 9.842, lat: 46.498}
+    Innsbruck:   { altitude: 579,  people: 132493, lon: 11.393, lat: 47.265}
+  saone:
+    Dijon:       { altitude: 250,  people: 156920, lon: 5.041, lat: 47.322}
+    Lyon:        { altitude: 178,  people: 513000, lon: 4.835, lat: 45.764}
+  doubs:
+    "Saint-Ursanne": { altitude: 643, people: 700, lon: 7.137, lat: 47.36}
+    Audincourt:  { altitude: 343,  people: 14300, lon: 6.877, lat: 47.483}
+    Besancon:    { altitude: 250,  people: 117100, lon: 6.025, lat: 47.237}
+  donau:
+    Donaueschingen: { altitude: 1008, people: 22100, lon: 8.515, lat: 47.953}
+    Ulm:         { altitude: 479,  people: 126290, lon: 9.982, lat: 48.401}
+    Ratisbonne:  { altitude: 327,  people: 150000, lon: 12.097, lat: 49.016}
+    Linz:        { altitude: 264,  people: 200000, lon: 14.285, lat: 48.306}
+    Vienne:      { altitude: 192,  people: 1900000, lon: 16.373, lat: 48.208}
+  dnieper:
+    Smolensk:    { altitude: 230,  people: 330000, lon: 32.05, lat: 54.78}
+    Mogilev:     { altitude: 190,  people: 360000, lon: 30.35, lat: 53.90}
+    Kiew:        { altitude: 170,  people: 2960000, lon: 30.52, lat: 50.45}
+  dniester:
+    Lwiw:        { altitude: 300,  people: 720000, lon: 24.03, lat: 49.84}
+    Ternopil:    { altitude: 320,  people: 225000, lon: 25.59, lat: 49.55}
+    Chmelnyzkyj: { altitude: 290,  people: 270000, lon: 27.00, lat: 49.42}
+    Winnyzja:    { altitude: 280,  people: 370000, lon: 28.47, lat: 49.23}
+  elbe:
+    "Spindleruv Mlyn": { altitude: 700, people: 1500, lon: 15.61, lat: 50.69}
+    Pardubice:   { altitude: 225,  people: 91000, lon: 15.77, lat: 50.04}
+    Praha:       { altitude: 190,  people: 1300000, lon: 14.42, lat: 50.09}
+    Hamburg:     { altitude: 6,    people: 1800000, lon: 9.99, lat: 53.55}
+  vistula:
+    Wisla:       { altitude: 600,  people: 1600, lon: 18.92, lat: 49.67}
+    Oswiecim:    { altitude: 230,  people: 39000, lon: 19.21, lat: 50.04}
+    Krakau:      { altitude: 220,  people: 770000, lon: 19.94, lat: 50.06}
+    Warschau:    { altitude: 100,  people: 1790000, lon: 21.01, lat: 52.23}
+  oder:
+    Ostrava:     { altitude: 210,  people: 290000, lon: 18.28, lat: 49.84}
+    Szczecin:    { altitude: 5,    people: 400000, lon: 14.55, lat: 53.43}
+  loire:
+    "Le Puy-en-Velay": { altitude: 630, people: 21000, lon: 3.89, lat: 45.04}
+    "Saint-Etienne": { altitude: 520, people: 170000, lon: 4.39, lat: 45.44}
+    Nantes:      { altitude: 10,   people: 310000, lon: -1.55, lat: 47.22}
+
+capitals:
+  - { name: Paris,    lon: 2.3522,  lat: 48.8566 }
+  - { name: Rom,      lon: 12.4964, lat: 41.9028 }
+  - { name: Berlin,   lon: 13.4050, lat: 52.5200 }
+  - { name: Madrid,   lon: -3.7038, lat: 40.4168 }
+  - { name: Wien,     lon: 16.3738, lat: 48.2082 }
+  - { name: Warschau, lon: 21.0122, lat: 52.2297 }
+  - { name: Prag,     lon: 14.4378, lat: 50.0755 }
+  - { name: Budapest, lon: 19.0402, lat: 47.4979 }
+  - { name: Bukarest, lon: 26.1025, lat: 44.4268 }
+  - { name: Bern,    lon: 7.4474,  lat: 46.9480 }
+
+url:
+  # BAFU/Lindas - SPARQL (6-stellige Unique-ID: bafusp, 5-stellige Zugriffsart: sparq)
+  bafusp:
+    access: sparq
+    url: https://lindas.admin.ch/query
+  # PEGELONLINE WSV - REST (6-stellige Unique-ID: pegelo, 5-stellige Zugriffsart: resta)
+  pegelo:
+    access: resta
+    url: https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?waters=RHEIN&includeTimeseries=true&includeCurrentMeasurement=true
+  # OpenTopoMap - Tiles (6-stellige Unique-ID: otopom, 5-stellige Zugriffsart: tiles)
+  otopom:
+    access: tiles
+    url: https://a.tile.opentopomap.org/{z}/{tx}/{ty}.png

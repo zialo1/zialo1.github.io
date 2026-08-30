@@ -1,0 +1,93 @@
+key,text
+geschwindigkeit,"Weg eines Wassertropfens — Geschwindigkeit (Modell): min ≈ {sMin} km/Tag, max ≈ {sMax} km/Tag."
+verweilzeit,"Hinweis: Die tatsächliche Verweilzeit in einem See wie dem Bodensee oder Genfersee beträgt mehrere Jahre, bis derselbe Wassertropfen wieder ausfließt – für die Animation wird 1 Stunde angenommen."
+mouth-danube,Donau
+mouth-mediterranean,Mittelmeer
+mouth-atlantic,Atlantik
+mouth-rhone,Rhône
+mouth-saone,Saône
+mouth-north-sea,Nordsee
+mouth-adriatic,Adria
+mouth-baltic,Ostsee
+mouth-black-sea,Schwarzes Meer
+mouth-po,Po
+mouth-rhine,Rhein
+
+Disentis,Disentis
+Coire,Coire
+Bale,Bâle
+Strasbourg,Strasbourg
+Karlsruhe,Karlsruhe
+Mannheim,Mannheim
+Cologne,Cologne
+Ulrichen,Ulrichen
+Brig,Brig
+Sierre,Sierre
+Lausanne,Lausanne
+Lyon,Lyon
+Meiringen,Meiringen
+Thun,Thun
+Berne,Berne
+Goschenen,Goschenen
+Altdorf,Altdorf
+Lucerne,Lucerne
+Airolo,Airolo
+Bellinzone,Bellinzone
+Locarno,Locarno
+Torre Pellice,Torre Pellice
+Turin,Turin
+Saint-Moritz,Saint-Moritz
+Innsbruck,Innsbruck
+Dijon,Dijon
+Saint-Ursanne,Saint-Ursanne
+Audincourt,Audincourt
+Besancon,Besançon
+Donaueschingen,Donaueschingen
+Ulm,Ulm
+Ratisbonne,Ratisbonne
+Linz,Linz
+Vienne,Vienne
+Smolensk,Smolensk
+Mogilev,Mogilev
+Kiew,Kiew
+Lwiw,Lwiw
+Ternopil,Ternopil
+Chmelnyzkyj,Chmelnyzkyj
+Winnyzja,Winnyzja
+Spindleruv Mlyn,Spindleruv Mlyn
+Pardubice,Pardubice
+Praha,Praha
+Hamburg,Hamburg
+Wisla,Wisla
+Oswiecim,Oswiecim
+Krakau,Krakau
+Warschau,Warschau
+Ostrava,Ostrava
+Szczecin,Szczecin
+Le Puy-en-Velay,Le Puy-en-Velay
+Saint-Etienne,Saint-Etienne
+Nantes,Nantes
+rhein-label,Rhein
+rhone-label,Rhône
+aare-label,Aare
+reuss-label,Reuss
+ticino-label,Tessin
+po-label,Po
+inn-label,Inn
+saone-label,Saône
+doubs-label,Doubs
+donau-label,Donau
+dnieper-label,Dnepr
+dniester-label,Dnister
+elbe-label,Elbe
+vistula-label,Weichsel
+oder-label,Oder
+loire-label,Loire
+title,Rhein — three.js
+travel,Weg eines Wassertropfens
+topobutton,Topo An/Aus
+panobutton,Weg im Panorama Modus
+river-choice,Fluss
+language-choice,Sprache
+altitude-picker,Z-Achse
+subtitle,"Fluss · Quelle → Mündung · Maus: drehen / zoom · Klick/↑↓: Höhe schneiden · Fluss oben links wählbar"
